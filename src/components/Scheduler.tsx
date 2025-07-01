@@ -134,7 +134,11 @@ const Scheduler: React.FC<SchedulerProps> = ({
         </div>
       )}
       
-      <div className="scheduler-grid" ref={schedulerRef}>
+      <div 
+        className="scheduler-grid" 
+        ref={schedulerRef}
+        style={{ '--time-slot-height': `${timeIncrement === 60 ? 120 : timeIncrement === 30 ? 60 : 30}px` } as React.CSSProperties}
+      >
         <div className="time-column">
           {timeSlots.map(({ hour, minute }) => (
             <div key={`${hour}-${minute}`} className="time-slot-label">

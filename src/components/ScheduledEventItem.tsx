@@ -29,7 +29,11 @@ const ScheduledEventItem: React.FC<ScheduledEventItemProps> = ({
     backgroundColor: event.color,
     transform: transform && !isResizing ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     opacity: isDragging && !isResizing ? 0.5 : 1,
+<<<<<<< HEAD
     cursor: 'move',
+=======
+    cursor: isResizing ? 'ns-resize' : 'move',
+>>>>>>> master
   };
 
   const handleResizeStart = (e: React.MouseEvent) => {

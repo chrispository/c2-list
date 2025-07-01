@@ -383,7 +383,7 @@ body {
 }
 
 .time-slot-label {
-  height: 60px;
+  height: var(--time-slot-height, 60px);
   padding: 0.5rem;
   font-size: 0.75rem;
   color: #6c757d;
@@ -393,15 +393,16 @@ body {
 .events-column {
   flex: 1;
   position: relative;
+  background: white;
 }
 
 .time-slot {
-  height: 60px;
+  height: var(--time-slot-height, 60px);
   border-bottom: 1px solid #f1f3f5;
 }
 
 .time-slot.hour-start {
-  border-bottom: 1px solid #dee2e6;
+  border-top: 1px solid #dee2e6;
 }
 
 .events-container {
