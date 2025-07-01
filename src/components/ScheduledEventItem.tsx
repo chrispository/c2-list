@@ -27,8 +27,8 @@ const ScheduledEventItem: React.FC<ScheduledEventItemProps> = ({
     top: `${position.top}px`,
     height: `${position.height}px`,
     backgroundColor: event.color,
-    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
-    opacity: isDragging ? 0.5 : 1,
+    transform: transform && !isResizing ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    opacity: isDragging && !isResizing ? 0.5 : 1,
     cursor: isResizing ? 'ns-resize' : 'move',
   };
 
