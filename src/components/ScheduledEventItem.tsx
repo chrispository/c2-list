@@ -27,22 +27,24 @@ const ScheduledEventItem: React.FC<ScheduledEventItemProps> = ({
     top: `${position.top}px`,
     height: `${position.height}px`,
     backgroundColor: event.color,
-    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
-    opacity: isDragging ? 0.5 : 1,
-    cursor: isResizing ? 'ns-resize' : 'move',
+    transform: transform && !isResizing ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    opacity: isDragging && !isResizing ? 0.5 : 1,
+    cursor: 'move',
   };
 
   const handleResizeStart = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     setIsResizing(true);
     
     const startY = e.clientY;
     const startHeight = position.height;
-    
+    const incrementHeight = 60;
+
     const handleMouseMove = (e: MouseEvent) => {
       const deltaY = e.clientY - startY;
-      const newHeight = Math.max(60 / (60 / timeIncrement), startHeight + deltaY);
-      const roundedHeight = Math.round(newHeight / (60 / (60 / timeIncrement))) * (60 / (60 / timeIncrement));
+      const newHeight = Math.max(incrementHeight, startHeight + deltaY);
+      const roundedHeight = Math.round(newHeight / incrementHeight) * incrementHeight;
       
       if (resizeRef.current) {
         resizeRef.current.style.height = `${roundedHeight}px`;
@@ -51,10 +53,11 @@ const ScheduledEventItem: React.FC<ScheduledEventItemProps> = ({
     
     const handleMouseUp = (e: MouseEvent) => {
       const deltaY = e.clientY - startY;
-      const newHeight = Math.max(60 / (60 / timeIncrement), startHeight + deltaY);
-      const roundedHeight = Math.round(newHeight / (60 / (60 / timeIncrement))) * (60 / (60 / timeIncrement));
+      const newHeight = Math.max(incrementHeight, startHeight + deltaY);
+      const roundedHeight = Math.round(newHeight / incrementHeight) * incrementHeight;
       
-      const durationMinutes = (roundedHeight / 60) * timeIncrement;
+      const durationInIncrements = roundedHeight / incrementHeight;
+      const durationMinutes = durationInIncrements * timeIncrement;
       const newEnd = new Date(event.start);
       newEnd.setMinutes(newEnd.getMinutes() + durationMinutes);
       
